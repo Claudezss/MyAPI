@@ -30,7 +30,7 @@ def create_app():
 
     @app.route("/")
     def home():
-        return jsonify("This is a template of flask-celery-rabittq-flower app")
+        return jsonify("Claude Zhang's APIs")
 
     app.config["RESTX_MASK_SWAGGER"] = False
     app.config["RESTX_JSON"] = {"ensure_ascii": False}

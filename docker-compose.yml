@@ -10,18 +10,19 @@ services:
             - "5672:5672"
 
     backend:
-      build: .
-      image: backend_app
+      image: docker.pkg.github.com/claudezss/claudezhang/backend:1.0.0
       depends_on:
         - rabbit
       environment: &env
         - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+        - GMAIL_USER=$GMAIL_USER
+        - GMAIL_PASS=$GMAIL_PASS
       entrypoint: ["/bin/sh", "./entrypoint/start.sh"]
       ports:
         - "8000:8000"
 
     worker:
-       image: backend_app
+       image: docker.pkg.github.com/claudezss/claudezhang/backend:1.0.0
        depends_on:
          - backend
          - rabbit
@@ -30,7 +31,7 @@ services:
             - rabbit
 
     flower:
-        image: backend_app
+        image: docker.pkg.github.com/claudezss/claudezhang/backend:1.0.0
         command: ["/bin/sh", "./entrypoint/flower.sh"]
         depends_on:
             - rabbit

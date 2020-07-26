@@ -4,9 +4,7 @@ import json
 def test_home(client):
     rsp = client.get("/")
     assert rsp.status_code == 200
-    assert "This is a template of flask-celery-rabittq-flower app" == json.loads(
-        rsp.data.decode()
-    )
+    assert "Claude Zhang's APIs" == json.loads(rsp.data.decode())
 
 
 def test_doc(client):
