@@ -1,0 +1,39 @@
+version: '2'
+services:
+    rabbit:
+        hostname: rabbit
+        image: rabbitmq:latest
+        environment:
+          - RABBITMQ_DEFAULT_USER=admin
+          - RABBITMQ_DEFAULT_PASS=mypass
+        ports:
+            - "5672:5672"
+
+    backend:
+      build: .
+      image: backend_app
+      depends_on:
+        - rabbit
+      environment: &env
+        - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+      entrypoint: ["/bin/sh", "./entrypoint/start.sh"]
+      ports:
+        - "8000:8000"
+
+    worker:
+       image: backend_app
+       depends_on:
+         - backend
+         - rabbit
+       entrypoint: ["/bin/sh", "./entrypoint/worker.sh"]
+       links:
+            - rabbit
+
+    flower:
+        image: backend_app
+        command: ["/bin/sh", "./entrypoint/flower.sh"]
+        depends_on:
+            - rabbit
+            - worker
+        ports:
+            - "5555:5555"
