@@ -3,14 +3,18 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 from flask_app.app import create_celery
+import os
 
 celery_app = create_celery()
+
+GMAIL_USER = os.environ.get("GMAIL_USER")
+GMAIL_PASS = os.environ.get("GMAIL_PASS")
 
 
 @celery_app.task(name="mailer")
 def send_email(email_message):
-    login = "zy2269770664@gmail.com"
-    password = "kzpeuoikhobflzdv"
+    login = GMAIL_USER
+    password = GMAIL_PASS
 
     sender_email = "zy2269770664@gmail.com"
     receiver_email = "zy2269770664@gmail.com"

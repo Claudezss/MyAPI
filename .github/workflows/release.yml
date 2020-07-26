@@ -23,3 +23,17 @@ jobs:
           registry: docker.pkg.github.com
           repository: claudezss/claudezhang/backend
           tag_with_ref: true
+
+  delpoy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        run: |
+          apt-get update
+          apt-get install sshpass
+          sshpass -p '${{secrets.HOST_PASS}}' ssh root@${{secrets.HOST}}
+          cd /home/claude/claudezhang
+          export GMAIL_USER=${{secrets.GMAIL_USER}}
+          export GMAIL_PASS=${{secrets.GMAIL_PASS}}
+          docker-compose up -d
+        shell: bash
