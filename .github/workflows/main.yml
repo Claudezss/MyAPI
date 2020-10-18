@@ -29,4 +29,5 @@ jobs:
         isort
     - name: Test with pytest
       run: |
+        export ENV=TEST
         pytest -s tests/unit_tests
