@@ -21,5 +21,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: claudezss/MyAPI/backend
+          repository: claudezss/myapi/backend
           tag_with_ref: true
