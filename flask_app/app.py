@@ -4,6 +4,7 @@ from flask_app.model.db import main_db
 from celery import Celery
 import os
 from flask_app.api.register import register_apis
+from flask_app.middleware import Middleware
 
 USER = os.environ.get("USER", "postgres")
 PASS = os.environ.get("PASS", "1234")
@@ -49,6 +50,7 @@ def create_app():
         app.config["SQLALCHEMY_DATABASE_URI"] = CONFIG
     main_db.init_app(app)
     app = register_apis(app)
+    app.wsgi_app = Middleware(app.wsgi_app)
     with app.app_context():
         main_db.create_all()
     return app

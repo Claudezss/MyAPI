@@ -17,7 +17,7 @@ def register_apis(app: Flask) -> Flask:
 
         Api.specs_url = specs_url
 
-    api = Api(title="Example API Docs", version="1.0", doc="/doc/", ordered=True)
+    api = Api(title="API Docs", version="1.0", doc="/doc/", ordered=True)
 
     # add namespace to api
     api.add_namespace(example_api_ns, path="/example")

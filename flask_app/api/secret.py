@@ -8,9 +8,6 @@ api = Namespace("Secret", description="private apis")
 class SlinkParser:
     default_parser = api.parser()
 
-    def __init__(self):
-        self.default_parser.add_argument("code", required=True)
-
     def get(self):
         get_parser = self.default_parser.copy()
         get_parser.add_argument("id")
@@ -35,14 +32,6 @@ class SlinkAPI(Resource):
     def get(self):
         args = self.parser.get().parse_args()
         slinks = Slink.query.all()
-
-        if not args.get("code", None):
-            raise abort(400, "Could not find access code")
-
-        if args.get("id", None):
-            slinks.filter(id=args["id"])
-        if args.get("name", None):
-            slinks.filter(name=args["name"])
 
         rsp = [{"name": slink.name, "link": slink.link} for slink in slinks]
 
