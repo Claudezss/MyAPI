@@ -6,8 +6,8 @@ import os
 from flask_app.api.register import register_apis
 from flask_app.middleware import Middleware
 
-USER = os.environ.get("USER", "postgres")
-PASS = os.environ.get("PASS", "1234")
+USER = os.environ.get("DB_USER", "postgres")
+PASS = os.environ.get("DB_PASS", "1234")
 IP = os.environ.get("IP", "0.0.0.0")
 PORT = os.environ.get("PORT", "5432")
 DB = os.environ.get("DB", "postgres")
