@@ -30,9 +30,9 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
          
       - name: Deploy flask
-        run: kubectl apply -f $GITHUB_WORKSPACE/deploy/flask.yaml
+        run: kubectl apply -f deploy/flask.yaml
         
       - name: Deploy worker
-        run: kubectl apply -f $GITHUB_WORKSPACE/deploy/worker.yaml
+        run: kubectl apply -f deploy/worker.yaml
     
    
