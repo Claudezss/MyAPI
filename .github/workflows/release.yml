@@ -30,7 +30,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           
       - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save actions-k8s-1-16
+        run: doctl kubernetes cluster kubeconfig save b8025a39-472e-4746-84ed-18b7ec5cdb31
          
       - name: Deploy flask
         run: kubectl apply -f deploy/flask.yaml
