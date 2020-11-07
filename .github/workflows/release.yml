@@ -23,3 +23,16 @@ jobs:
           registry: docker.pkg.github.com
           repository: claudezss/myapi/backend
           tag_with_ref: true
+          
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+         
+      - name: Deploy flask
+        run: kubectl apply -f $GITHUB_WORKSPACE/deploy/flask.yaml
+        
+      - name: Deploy worker
+        run: kubectl apply -f $GITHUB_WORKSPACE/deploy/worker.yaml
+    
+   
