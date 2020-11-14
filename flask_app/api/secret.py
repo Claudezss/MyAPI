@@ -1,5 +1,5 @@
 from flask_restx import Namespace, Resource, abort
-from flask import jsonify, render_template_string, make_response
+from flask import jsonify, make_response
 from flask_app.model.secret import Slink, db
 
 api = Namespace("Secret", description="private apis")
