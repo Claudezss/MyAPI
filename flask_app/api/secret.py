@@ -1,5 +1,5 @@
 from flask_restx import Namespace, Resource, abort
-from flask import jsonify, render_template_string
+from flask import jsonify, render_template_string, make_response
 from flask_app.model.secret import Slink, db
 
 api = Namespace("Secret", description="private apis")
@@ -39,7 +39,9 @@ class SlinkAPI(Resource):
             html = ""
             for slink in slinks:
                 html += f"<a href='{slink.link}' target='_blank'>{slink.name}</a>"
-            return render_template_string(html)
+            rsp = make_response(html)
+            rsp.mimetype = "text/html"
+            return rsp
 
         return jsonify(rsp)
 
