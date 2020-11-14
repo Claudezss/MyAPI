@@ -1,6 +1,5 @@
 from flask_restx import Namespace, Resource
 from flask_app.schema.response.example import register_example_response_models
-from flask import jsonify
 
 api = Namespace("Example", description="an example of api doc")
 
@@ -32,21 +31,3 @@ class Example(Resource):
     def post(self):
         rsp = {"message": "Api message for Post", "results": "Success"}
         return rsp
-
-
-@api.route("/test")
-class TestCelery(Resource):
-    def get(self):
-        from flask_app.worker.tasks import test
-
-        task = test.delay()
-        return jsonify(task.id)
-
-
-@api.route("/email")
-class TestEmail(Resource):
-    def get(self):
-        from flask_app.worker.tasks import send_email
-
-        task = send_email.delay("sdfsdfsdf")
-        return jsonify(task.id)

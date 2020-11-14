@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_app.model.db import main_db
-from celery import Celery
 import os
 from flask_app.api.register import register_apis
 from flask_app.middleware import Middleware
@@ -12,26 +11,7 @@ IP = os.environ.get("IP", "0.0.0.0")
 PORT = os.environ.get("PORT", "5432")
 DB = os.environ.get("DB", "postgres")
 
-CONFIG = f"postgresql://postgres:{PASS}@{IP}:{PORT}/{DB}"
-
-
-def create_celery(app=None):
-    app = app or create_app()
-    celery = Celery(
-        app.import_name, backend="amqp", broker=os.environ["CELERY_BROKER_URL"]
-    )
-    celery.conf.update(app.config)
-    TaskBase = celery.Task
-
-    class ContextTask(TaskBase):
-        abstract = True
-
-        def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return TaskBase.__call__(self, *args, **kwargs)
-
-    celery.Task = ContextTask
-    return celery
+CONFIG = f"postgresql://{USER}:{PASS}@{IP}:{PORT}/{DB}"
 
 
 def create_app():
