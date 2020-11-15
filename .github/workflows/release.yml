@@ -33,9 +33,6 @@ jobs:
         run: doctl kubernetes cluster kubeconfig save b8025a39-472e-4746-84ed-18b7ec5cdb31
          
       - name: Deploy flask
-        run: kubectl apply -f deploy/flask.yaml
-        
-      - name: Deploy worker
-        run: kubectl apply -f deploy/worker.yaml
-    
-   
+        run: |
+          template=`cat "deploy/myapi.yaml" | sed "s/{{TAG}}/${{ steps.get_version.outputs.version }}/g"` | sed "s/{{CODE}}/${{secrets.CODE}}/g"`
+          echo "$template" | kubectl apply -f -

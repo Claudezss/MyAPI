@@ -13,6 +13,7 @@ class SlinkParser:
         get_parser.add_argument("id")
         get_parser.add_argument("name")
         get_parser.add_argument("html")
+        get_parser.add_argument("code", required=True)
         return get_parser
 
     def post(self):

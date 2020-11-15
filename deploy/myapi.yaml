@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: backend
+  name: flask
+  namespace: myapi
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: flask
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      namespace: myapi
+      labels:
+        service: flask
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - ./entrypoint/start.sh
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: postgres-credentials
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: postgres-credentials
+        - name: IP
+          value: postgres
+        - name: SECRET_CODE
+          value: {{CODE}}
+        - name: DB
+          value: postgres
+        - name: ENV
+          value: production
+        image: docker.pkg.github.com/claudezss/myapi/backend:{{TAG}}
+        imagePullPolicy: Always
+        name: flask
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: dockerconfigjson-github-com
+      restartPolicy: Always
