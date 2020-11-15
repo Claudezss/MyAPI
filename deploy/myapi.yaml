@@ -40,7 +40,7 @@ spec:
         - name: IP
           value: postgres
         - name: SECRET_CODE
-          value: ${{ secrets.CODE }}
+          value: {{CODE}}
         - name: DB
           value: postgres
         - name: ENV
