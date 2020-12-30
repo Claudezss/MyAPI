@@ -25,7 +25,7 @@ def create_app():
     app.config["RESTX_MASK_SWAGGER"] = False
     app.config["RESTX_JSON"] = {"ensure_ascii": False}
     if os.environ.get("ENV", "") == "TEST":
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db"
     else:
         app.config["SQLALCHEMY_DATABASE_URI"] = CONFIG
     main_db.init_app(app)
