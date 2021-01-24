@@ -34,5 +34,5 @@ jobs:
          
       - name: Deploy flask
         run: |
-          template=`cat "deploy/myapi.yaml.template" | sed -e "s/{{TAG}}/'${{ github.event.release.tag_name }}/g'; s/{{CODE}}/'${{secrets.CODE}}'/g; s/{{AWS_KEY}}/'${{secrets.AWS_KEY}}'/g; s/{{AWS_SECRET}}/'${{secrets.AWS_SECRET}}'/g; s/{{SPACE_NAME}}/'${{secrets.SPACE_NAME}}'/g; s/{{SPACE_ENDPOINT}}/'${{secrets.SPACE_ENDPOINT}}'/g; s/{{SPACE_REGION}}/'${{secrets.SPACE_REGION}}'/g"`
+          template=`cat "deploy/myapi.yaml.template" | sed -e "s/{{TAG}}/${{ github.event.release.tag_name }}; s/{{CODE}}/${{secrets.CODE}}/g; s/{{AWS_KEY}}/${{secrets.AWS_KEY}}/g; s/{{AWS_SECRET}}/${{secrets.AWS_SECRET}}/g; s/{{SPACE_NAME}}/'${{secrets.SPACE_NAME}}'/g; s/{{SPACE_ENDPOINT}}/'${{secrets.SPACE_ENDPOINT}}'/g; s/{{SPACE_REGION}}/${{secrets.SPACE_REGION}}/g"`
           echo "$template" | kubectl apply -f -
