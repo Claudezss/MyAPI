@@ -23,6 +23,7 @@ jobs:
           registry: docker.pkg.github.com
           repository: claudezss/myapi/backend
           tag_with_ref: true
+          build_args: AWS_KEY=${{secrets.AWS_KEY}},AWS_SECRET=${{secrets.AWS_SECRET}},SPACE_NAME=${{secrets.SPACE_NAME}},SPACE_ENDPOINT=${{secrets.SPACE_ENDPOINT}},PACE_REGION=${{secrets.SPACE_REGION}}
           
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
