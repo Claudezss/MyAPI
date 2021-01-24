@@ -1,6 +1,7 @@
-from flask_restx import Namespace, Resource, abort
 from flask import jsonify, make_response
+from flask_app.api.functions.download import download_ehentai_images
 from flask_app.model.secret import Slink, db
+from flask_restx import Namespace, Resource, abort
 
 api = Namespace("Secret", description="private apis")
 
@@ -68,5 +69,39 @@ class SlinkAPI(Resource):
             db.session.commit()
         except Exception:
             return jsonify("Failed to save link")
+
+        return jsonify("Succeed")
+
+
+class EDownloadParser:
+    default_parser = api.parser()
+
+    def post(self):
+        post_parser = self.default_parser
+        post_parser.add_argument("link", required=True)
+        post_parser.add_argument("name", required=True)
+        post_parser.add_argument("code", required=True)
+        return post_parser
+
+
+@api.route("/e-download")
+class EDownloadAPI(Resource):
+
+    parser = EDownloadParser()
+
+    @api.response(200, "Success")
+    @api.expect(parser.post(), validate=False)
+    def post(self):
+        args = self.parser.post().parse_args()
+        link = args.get("link", None)
+        name = args.get("name", None)
+
+        if not name or not link:
+            return jsonify("Need name and link")
+
+        try:
+            download_ehentai_images(link, name, None)
+        except Exception:
+            return jsonify("Failed to download")
 
         return jsonify("Succeed")
