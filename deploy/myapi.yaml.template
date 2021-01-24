@@ -45,16 +45,6 @@ spec:
           value: postgres
         - name: ENV
           value: production
-        - name: AWS_KEY
-          value: {{AWS_KEY}}
-        - name: AWS_SECRET
-          value: {{AWS_SECRET}}
-        - name: SPACE_NAME
-          value: {{SPACE_NAME}}
-        - name: SPACE_ENDPOINT
-          value: {{SPACE_ENDPOINT}}
-        - name: SPACE_REGION
-          value: {{SPACE_REGION}}
         image: docker.pkg.github.com/claudezss/myapi/backend:{{TAG}}
         imagePullPolicy: Always
         name: flask
